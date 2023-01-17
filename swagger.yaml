@@ -1,0 +1,208 @@
+basePath: /api/v1
+consumes:
+    - application/json
+definitions:
+    CommonError:
+        properties:
+            message:
+                description: |-
+                    Message of the error
+                    in: string
+                type: string
+                x-go-name: Message
+            status:
+                description: |-
+                    Status of the error
+                    in: int64
+                format: int64
+                type: integer
+                x-go-name: Status
+        type: object
+        x-go-package: imp-goswagger/app/model
+    CommonSuccess:
+        properties:
+            message:
+                description: |-
+                    Message of the error
+                    in: string
+                type: string
+                x-go-name: Message
+            status:
+                description: |-
+                    Status of the error
+                    in: int64
+                format: int64
+                type: integer
+                x-go-name: Status
+        type: object
+        x-go-package: imp-goswagger/app/model
+    Product:
+        properties:
+            name:
+                description: |-
+                    Name of product
+                    in: string
+                type: string
+                x-go-name: Name
+            sku:
+                description: |-
+                    SKU of product
+                    in: string
+                type: string
+                x-go-name: SKU
+            uom:
+                description: |-
+                    UOM of product
+                    in: string
+                type: string
+                x-go-name: UOM
+            weight:
+                description: |-
+                    Weight of product
+                    in: int32
+                format: int32
+                type: integer
+                x-go-name: Weight
+        type: object
+        x-go-package: imp-goswagger/app/model
+    SaveProductRequest:
+        properties:
+            name:
+                description: |-
+                    Name of product
+                    in: string
+                type: string
+                x-go-name: Name
+            sku:
+                description: |-
+                    SKU of product
+                    in: string
+                type: string
+                x-go-name: SKU
+            uom:
+                description: |-
+                    UOM of the product
+                    in: string
+                type: string
+                x-go-name: UOM
+            weight:
+                description: |-
+                    Weight of the product
+                    in: int32
+                format: int32
+                type: integer
+                x-go-name: Weight
+        type: object
+        x-go-package: imp-goswagger/app/model
+    SuccessResponse:
+        properties:
+            data:
+                $ref: '#/definitions/data'
+            errors:
+                description: |-
+                    Errors is the response message
+                    in: string
+                x-go-name: Errors
+            meta:
+                $ref: '#/definitions/metaResponse'
+        type: object
+        x-go-name: responseHttp
+        x-go-package: imp-goswagger/app/model/base
+    data:
+        properties:
+            record:
+                x-go-name: Record
+            records:
+                x-go-name: Records
+        type: object
+        x-go-package: imp-goswagger/app/model/base
+    metaResponse:
+        properties:
+            code:
+                description: Code is the response code
+                example: 1000
+                format: int64
+                type: integer
+                x-go-name: Code
+            message:
+                description: Message is the response message
+                example: Success
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-package: imp-goswagger/app/model/base
+info:
+    title: 'Product Api:'
+    version: "0.1"
+paths:
+    /product:
+        get:
+            description: Get Product List
+            operationId: getList
+            tags:
+                - Product
+        post:
+            description: Update Product
+            operationId: SaveProductRequest
+            parameters:
+                - in: body
+                  name: body
+                  schema:
+                    $ref: '#/definitions/SaveProductRequest'
+                  x-go-name: Body
+            tags:
+                - Product
+    /product/{id}:
+        delete:
+            description: Delete Product by Id
+            operationId: byParamDelete
+            parameters:
+                - description: 'name: id'
+                  format: int64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            tags:
+                - Product
+        get:
+            description: Get Product by Id
+            operationId: byParamGet
+            parameters:
+                - description: 'name: id'
+                  format: int64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            tags:
+                - Product
+        put:
+            description: Update Product
+            operationId: SaveProductRequest
+            parameters:
+                - in: body
+                  name: body
+                  schema:
+                    $ref: '#/definitions/SaveProductRequest'
+                  x-go-name: Body
+            tags:
+                - Product
+produces:
+    - application/json
+responses:
+    ResponseHTTP:
+        description: ""
+        schema:
+            $ref: '#/definitions/SuccessResponse'
+schemes:
+    - http
+    - https
+securityDefinitions:
+    Bearer:
+        in: header
+        name: Authorization
+        type: apiKey
+swagger: "2.0"
